@@ -1,27 +1,10 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import './App.css'
+import { t } from 'i18next'
 
 type Section = 'home' | 'alphabets' | 'numbers' | 'stories' | 'games' | 'draw'
 type GameType = 'match' | 'find' | 'quiz'
-
-const stories = [
-  {
-    title: "The Friendly Lion 🦁",
-    content: "Once upon a time, there was a lion named Leo who loved to make friends. Every day, Leo would visit different animals in the jungle and play with them. He learned that being kind was more important than being strong!"
-  },
-  {
-    title: "The Magic Rainbow 🌈",
-    content: "Little Lily found a magical rainbow that could grant wishes. But instead of wishing for toys, she wished for all children to be happy. The rainbow was so touched that it painted beautiful colors across the sky forever!"
-  },
-  {
-    title: "The Brave Little Star ⭐",
-    content: "High up in the sky lived a tiny star named Sparkle. Though small, Sparkle shined the brightest to help lost travelers find their way home. Remember, being small doesn't mean you can't do big things!"
-  },
-  {
-    title: "The Curious Bunny 🐰",
-    content: "Bella the bunny loved asking questions. 'Why is the sky blue?' 'How do flowers grow?' Her curiosity helped her discover amazing things and she became the smartest bunny in the forest!"
-  }
-]
 
 const Confetti = ({ show }: { show: boolean }) => {
   if (!show) return null
@@ -44,6 +27,7 @@ const Confetti = ({ show }: { show: boolean }) => {
 }
 
 function App() {
+  const { t, i18n } = useTranslation()
   const [section, setSection] = useState<Section>('home')
   const [selectedLetter, setSelectedLetter] = useState<string | null>(null)
   const [selectedNumber, setSelectedNumber] = useState<number | null>(null)
@@ -59,6 +43,18 @@ function App() {
 
   const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
   const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+  const stories = [
+    { title: t('stories.story1.title'), content: t('stories.story1.content') },
+    { title: t('stories.story2.title'), content: t('stories.story2.content') },
+    { title: t('stories.story3.title'), content: t('stories.story3.content') },
+    { title: t('stories.story4.title'), content: t('stories.story4.content') }
+  ]
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng)
+    playSound('click')
+  }
 
   const letterExamples: { [key: string]: { emoji: string; word: string } } = {
     A: { emoji: '🍎', word: 'Apple' },
@@ -239,29 +235,41 @@ function App() {
       <Confetti show={showConfetti} />
       
       <header className="header">
-        <h1 className="title">🌟 Kids Learning Fun! 🌟</h1>
-        <div className="star-count">⭐ Stars: {stars}</div>
+        <h1 className="title">🌟 {t('appTitle')} 🌟</h1>
+        <div className="header-right">
+          <select className="language-selector" value={i18n.language} onChange={(e) => changeLanguage(e.target.value)}>
+            <option value="en">🇬🇧 English</option>
+            <option value="te">🇮🇳 తెలుగు</option>
+            <option value="hi">🇮🇳 हिंदी</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="zh">🇨🇳 中文</option>
+            <option value="ar">🇸🇦 العربية</option>
+          </select>
+          <div className="star-count">⭐ Stars: {stars}</div>
+        </div>
       </header>
 
       {section === 'home' && (
         <div className="home-section">
           <div className="mascot">🐻</div>
-          <h2 className="welcome-text">Let's Learn & Play! 🎉</h2>
+          <h2 className="welcome-text">{t('appTitle')} 🎉</h2>
           <div className="menu-buttons">
             <button className="menu-btn" onClick={() => { setSection('alphabets'); playSound('click') }}>
-              🔤 Learn Alphabets
+              🔤 {t('menu.alphabets')}
             </button>
             <button className="menu-btn" onClick={() => { setSection('numbers'); playSound('click') }}>
-              🔢 Learn Numbers
+              🔢 {t('menu.numbers')}
             </button>
             <button className="menu-btn" onClick={() => { setSection('games'); playSound('click') }}>
-              🎮 Play Games
+              🎮 {t('menu.games')}
             </button>
             <button className="menu-btn" onClick={() => { setSection('draw'); playSound('click') }}>
-              🎨 Draw & Trace
+              🎨 {t('menu.draw')}
             </button>
             <button className="menu-btn" onClick={() => { setSection('stories'); playSound('click') }}>
-              📚 Story Time
+              📚 {t('menu.stories')}
             </button>
           </div>
         </div>
@@ -275,13 +283,13 @@ function App() {
           setGameType(null)
           playSound('click')
         }}>
-          ← Back to Home
+          ← {t('backHome')}
         </button>
       )}
 
       {section === 'alphabets' && (
         <div className="content-section">
-          <h2 className="section-title">🔤 Click a Letter! 🔤</h2>
+          <h2 className="section-title">🔤 {t('alphabets.title')} 🔤</h2>
           <div className="alphabet-grid">
             {alphabets.map((letter) => (
               <button
@@ -309,7 +317,7 @@ function App() {
 
       {section === 'numbers' && (
         <div className="content-section">
-          <h2 className="section-title">🔢 Click a Number! 🔢</h2>
+          <h2 className="section-title">🔢 {t('numbers.title')} 🔢</h2>
           <div className="number-grid">
             {numbers.map((num) => (
               <button
@@ -338,17 +346,17 @@ function App() {
 
       {section === 'games' && !gameType && (
         <div className="content-section">
-          <h2 className="section-title">🎮 Choose a Game! 🎮</h2>
-          <div className="game-score">Score: {score}</div>
+          <h2 className="section-title">🎮 {t('games.title')} 🎮</h2>
+          <div className="game-score">{t('games.score')}: {score}</div>
           <div className="menu-buttons">
             <button className="game-btn" onClick={() => setGameType('match')}>
-              🃏 Memory Match
+              🎴 {t('games.matching')}
             </button>
             <button className="game-btn" onClick={() => setGameType('find')}>
-              🔍 Find the Letter
+              🔍 {t('games.findLetter')}
             </button>
             <button className="game-btn" onClick={() => setGameType('quiz')}>
-              ❓ Picture Quiz
+              ❓ {t('games.quiz')}
             </button>
           </div>
         </div>
@@ -356,7 +364,7 @@ function App() {
 
       {section === 'games' && gameType === 'match' && (
         <div className="content-section">
-          <h2 className="section-title">🃏 Match the Letters!</h2>
+          <h2 className="section-title">🎴 {t('games.matching')}!</h2>
           <div className="match-grid">
             {matchCards.map((card) => (
               <button
@@ -369,13 +377,13 @@ function App() {
               </button>
             ))}
           </div>
-          <button className="reset-btn" onClick={initMatchGame}>🔄 New Game</button>
+          <button className="reset-btn" onClick={initMatchGame}>🔄 {t('games.playAgain')}</button>
         </div>
       )}
 
       {section === 'games' && gameType === 'find' && (
         <div className="content-section">
-          <h2 className="section-title">🔍 Find the Letter: {findTarget}</h2>
+          <h2 className="section-title">🔍 {t('games.findInstruction')}: {findTarget}</h2>
           <div className="alphabet-grid">
             {alphabets.map((letter) => (
               <button
@@ -410,14 +418,14 @@ function App() {
 
       {section === 'draw' && (
         <div className="content-section">
-          <h2 className="section-title">🎨 Draw & Trace Letters!</h2>
+          <h2 className="section-title">🎨 {t('draw.title')}</h2>
           <DrawingCanvas />
         </div>
       )}
 
       {section === 'stories' && (
         <div className="content-section">
-          <h2 className="section-title">📚 Story Time 📚</h2>
+          <h2 className="section-title">📚 {t('stories.title')} 📚</h2>
           <div className="story-card">
             <h3 className="story-title">{stories[currentStory].title}</h3>
             <p className="story-content">{stories[currentStory].content}</p>
@@ -469,6 +477,19 @@ const DrawingCanvas = () => {
     ctx.beginPath()
     ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top)
   }
+
+  const startDrawingTouch = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault()
+    const canvas = e.currentTarget
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    
+    setIsDrawing(true)
+    const rect = canvas.getBoundingClientRect()
+    const touch = e.touches[0]
+    ctx.beginPath()
+    ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top)
+  }
   
   const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawing) return
@@ -483,6 +504,27 @@ const DrawingCanvas = () => {
     ctx.lineCap = 'round'
     ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top)
     ctx.stroke()
+  }
+
+  const drawTouch = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (!isDrawing) return
+    e.preventDefault()
+    
+    const canvas = e.currentTarget
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    
+    const rect = canvas.getBoundingClientRect()
+    const touch = e.touches[0]
+    ctx.strokeStyle = color
+    ctx.lineWidth = 8
+    ctx.lineCap = 'round'
+    ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top)
+    ctx.stroke()
+  }
+
+  const stopDrawing = () => {
+    setIsDrawing(false)
   }
   
   const clearCanvas = () => {
@@ -526,7 +568,7 @@ const DrawingCanvas = () => {
             <option key={l} value={l}>{l}</option>
           ))}
         </select>
-        <button className="clear-btn" onClick={clearCanvas}>🗑️ Clear</button>
+        <button className="clear-btn" onClick={clearCanvas}>🗑️ {t('draw.clear')}</button>
       </div>
       <canvas
         ref={(el) => {
@@ -546,8 +588,12 @@ const DrawingCanvas = () => {
         height={400}
         onMouseDown={startDrawing}
         onMouseMove={draw}
-        onMouseUp={() => setIsDrawing(false)}
-        onMouseLeave={() => setIsDrawing(false)}
+        onMouseUp={stopDrawing}
+        onMouseLeave={stopDrawing}
+        onTouchStart={startDrawingTouch}
+        onTouchMove={drawTouch}
+        onTouchEnd={stopDrawing}
+        onTouchCancel={stopDrawing}
       />
     </div>
   )

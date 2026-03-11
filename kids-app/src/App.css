@@ -27,9 +27,44 @@ body {
 
 /* Header */
 .header {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 2rem;
   animation: slideDown 0.8s ease-out;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.language-selector {
+  padding: 0.75rem 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.95);
+  border: 3px solid #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive, sans-serif;
+}
+
+.language-selector:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  background: #fff;
+}
+
+.language-selector:focus {
+  outline: none;
+  border-color: #ffe66d;
 }
 
 @keyframes slideDown {
@@ -44,12 +79,14 @@ body {
 }
 
 .title {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   font-weight: 900;
   color: #fff;
   text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-  margin-bottom: 1rem;
   letter-spacing: 2px;
+  flex: 1;
+  min-width: 250px;
+  text-align: center;
 }
 
 .star-count {
@@ -779,7 +816,21 @@ body {
 
 @media (max-width: 480px) {
   .title {
-    font-size: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .header {
+    justify-content: center;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .language-selector {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
   }
   
   .alphabet-grid {
