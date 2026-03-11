@@ -20,12 +20,16 @@ const stories = [
   {
     title: "The Curious Bunny 🐰",
     content: "Bella the bunny loved asking questions. 'Why is the sky blue?' 'How do flowers grow?' Her curiosity helped her discover amazing things and she became the smartest bunny in the forest!"
+  },
+  {
+    title: "The Helpful Ant 🐜",
+    content: "A little ant found a piece of sugar on the road. Instead of eating it alone, it called all its friends. Together they carried it to their home and shared it happily."
   }
 ]
 
 const Confetti = ({ show }: { show: boolean }) => {
   if (!show) return null
-  
+
   return (
     <div className="confetti-container">
       {Array.from({ length: 50 }).map((_, i) => (
@@ -96,20 +100,20 @@ function App() {
       correct: 1500,
       wrong: 300
     }
-    
+
     const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
     const oscillator = audioContext.createOscillator()
     const gainNode = audioContext.createGain()
-    
+
     oscillator.connect(gainNode)
     gainNode.connect(audioContext.destination)
-    
+
     oscillator.frequency.value = frequencies[type]
     oscillator.type = 'sine'
-    
+
     gainNode.gain.setValueAtTime(0.3, audioContext.currentTime)
     gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5)
-    
+
     oscillator.start(audioContext.currentTime)
     oscillator.stop(audioContext.currentTime + 0.5)
   }
@@ -151,12 +155,12 @@ function App() {
 
   const handleCardClick = (id: number) => {
     if (matchCards[id].matched || matchCards[id].flipped) return
-    
+
     const newCards = [...matchCards]
     newCards[id].flipped = true
     setMatchCards(newCards)
     playSound('click')
-    
+
     if (firstCard === null) {
       setFirstCard(id)
     } else {
@@ -166,7 +170,7 @@ function App() {
         setMatchCards(newCards)
         celebrateSuccess()
         setFirstCard(null)
-        
+
         if (newCards.every(card => card.matched)) {
           setTimeout(() => speak('Amazing! You matched them all!'), 500)
         }
@@ -210,7 +214,7 @@ function App() {
       wrongLetters[Math.floor(Math.random() * wrongLetters.length)],
       wrongLetters[Math.floor(Math.random() * wrongLetters.length)]
     ].sort(() => Math.random() - 0.5)
-    
+
     setQuizQuestion({ letter: correctLetter, options })
     speak(`Which one is ${letterExamples[correctLetter].word}?`)
   }
@@ -237,7 +241,7 @@ function App() {
   return (
     <div className="app">
       <Confetti show={showConfetti} />
-      
+
       <header className="header">
         <h1 className="title">🌟 Kids Learning Fun! 🌟</h1>
         <div className="star-count">⭐ Stars: {stars}</div>
@@ -458,25 +462,25 @@ const DrawingCanvas = () => {
   const [isDrawing, setIsDrawing] = useState(false)
   const [color, setColor] = useState('#ff6b6b')
   const [traceLetter, setTraceLetter] = useState('A')
-  
+
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = e.currentTarget
     const ctx = canvas.getContext('2d')
     if (!ctx) return
-    
+
     setIsDrawing(true)
     const rect = canvas.getBoundingClientRect()
     ctx.beginPath()
     ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top)
   }
-  
+
   const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawing) return
-    
+
     const canvas = e.currentTarget
     const ctx = canvas.getContext('2d')
     if (!ctx) return
-    
+
     const rect = canvas.getBoundingClientRect()
     ctx.strokeStyle = color
     ctx.lineWidth = 8
@@ -484,14 +488,14 @@ const DrawingCanvas = () => {
     ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top)
     ctx.stroke()
   }
-  
+
   const clearCanvas = () => {
     const canvas = document.querySelector('canvas')
     if (!canvas) return
     const ctx = canvas.getContext('2d')
     if (!ctx) return
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    
+
     // Draw trace letter
     ctx.font = '200px Arial'
     ctx.fillStyle = '#e0e0e0'
@@ -499,11 +503,11 @@ const DrawingCanvas = () => {
     ctx.textBaseline = 'middle'
     ctx.fillText(traceLetter, canvas.width / 2, canvas.height / 2)
   }
-  
+
   useEffect(() => {
     clearCanvas()
   }, [traceLetter])
-  
+
   return (
     <div className="drawing-container">
       <div className="drawing-controls">
@@ -517,7 +521,7 @@ const DrawingCanvas = () => {
             />
           ))}
         </div>
-        <select 
+        <select
           className="letter-select"
           value={traceLetter}
           onChange={(e) => setTraceLetter(e.target.value)}
