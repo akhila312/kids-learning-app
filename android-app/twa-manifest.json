@@ -1,0 +1,53 @@
+{
+  "packageId": "com.kidslearn.alphabets",
+  "host": "kids-learn-fun-time.vercel.app",
+  "name": "Kids Learning App",
+  "launcherName": "Kids Learn",
+  "display": "standalone",
+  "themeColor": "#667eea",
+  "navigationColor": "#667eea",
+  "backgroundColor": "#667eea",
+  "enableNotifications": false,
+  "startUrl": "/",
+  "iconUrl": "https://kids-learn-fun-time.vercel.app/icon-512.png",
+  "maskableIconUrl": "https://kids-learn-fun-time.vercel.app/icon-512.png",
+  "monochromeIconUrl": "https://kids-learn-fun-time.vercel.app/icon-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "android"
+  },
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [
+    {
+      "name": "Alphabets",
+      "short_name": "ABC",
+      "url": "/?page=alphabets",
+      "icon": "https://kids-learn-fun-time.vercel.app/icon-192.png"
+    },
+    {
+      "name": "Numbers",
+      "short_name": "123",
+      "url": "/?page=numbers",
+      "icon": "https://kids-learn-fun-time.vercel.app/icon-192.png"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://kids-learn-fun-time.vercel.app/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": {
+      "enabled": false
+    },
+    "playBilling": {
+      "enabled": false
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false
+}
