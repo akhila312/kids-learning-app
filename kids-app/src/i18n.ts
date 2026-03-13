@@ -39,6 +39,22 @@ const resources = {
         story4: {
           title: "The Curious Bunny 🐰",
           content: "Bella the bunny loved asking questions. 'Why is the sky blue?' 'How do flowers grow?' Her curiosity helped her discover amazing things and she became the smartest bunny in the forest!"
+        },
+        story5: {
+          title: "The Helpful Elephant 🐘",
+          content: "Emma the elephant used her long trunk to help everyone in the jungle. She helped birds build nests, gave water to flowers, and even saved a baby monkey from a tree. Everyone loved Emma because she had the biggest heart!"
+        },
+        story6: {
+          title: "The Dancing Butterfly 🦋",
+          content: "Betty the butterfly loved to dance in the garden. Her colorful wings sparkled in the sunlight. She taught all her friends that dancing makes everyone happy, and soon the whole garden was filled with joy!"
+        },
+        story7: {
+          title: "The Wise Owl 🦉",
+          content: "Oliver the owl lived in an old oak tree. He loved reading books all night long. He learned that knowledge is the greatest treasure, and he shared his wisdom with all the young animals in the forest!"
+        },
+        story8: {
+          title: "The Singing Frog 🐸",
+          content: "Freddy the frog had the most beautiful voice. Every evening, he sang songs by the pond. His music made everyone smile and taught them that everyone has a special gift to share with the world!"
         }
       },
       games: {
